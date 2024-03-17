@@ -1,7 +1,4 @@
 # RStudio files
+.Rhistory
 *.Rproj
-
-# Data
-data/original/*
-
 .Rproj.user
