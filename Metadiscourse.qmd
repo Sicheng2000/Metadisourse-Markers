@@ -1,0 +1,629 @@
+---
+title: "Metadisourse Markers"
+description: |
+This Q document is to match the metadicourse markers according to categorization created by Sicheng Wang.
+author: "Sicheng Wang"
+---
+
+```{r}
+#| label: create-readme
+#| message: false
+
+if (!file.exists("README.md")) {
+  file.create("README.md")}
+```
+
+```{r}
+#| label: setup
+#| message: false
+
+library(knitr)        
+library(stringr) # match words    
+library(readr) # read texts in lines
+library(readtext) # read the source and target text in word document
+library(fs) # interacting with operating system 
+library(qtalrkit) # creating data original files
+```
+
+```{r}
+#| label: read-files
+#| message: false
+
+doc_en <- readtext("data/original/ST.doc")
+file_cn <- "data/original/TT.doc"
+Encoding(file_cn) <- "UTF-8"
+
+doc_cn <- readtext(file_cn)
+```
+
+```{r}
+#| label: creare-data-origin
+#| message: false
+
+# Create a data_origin file
+if (!file.exists("data/original/data_origin.csv")) {
+  create_data_origin("data/original/data_origin.csv")
+  }
+```
+
+```{r}
+#| label: match-hedges-en
+#| message: false
+
+hedg_may <-
+ str_extract_all(doc_en$text, ".*\\b[Mm]ay\\b.*")
+hedg_may_num <- length(hedg_may)
+
+hedg_typ <-
+ str_extract_all(doc_en$text, ".*\\b[Tt]ypically\\b.*")
+hedg_typ_num <- length(hedg_typ)
+
+hedg_rel <-
+ str_extract_all(doc_en$text, ".*\\b[Rr]elatively\\b.*")
+hedg_rel_num <- length(hedg_rel)
+
+hedg_sli <-
+ str_extract_all(doc_en$text, ".*\\b[Ss]lightly\\b.*")
+hedg_sli_num <- length(hedg_sli)
+
+hedg_pro <-
+ str_extract_all(doc_en$text, ".*\\b[Pp]robably\\b.*")
+hedg_pro_num <- length(hedg_pro)
+
+hedg_sug <-
+ str_extract_all(doc_en$text, ".*\\b[Ss]uggest.*\\b.*")
+hedg_sug_num <- length(hedg_sug)
+```
+
+```{r}
+#| label: match-boosters-en
+#| message: false
+
+bo_es <-
+ str_extract_all(doc_en$text, ".*\\b[Ee]specially\\b.*")
+bo_es_num <- length(bo_es)
+
+bo_su <-
+ str_extract_all(doc_en$text, ".*\\b[Ss]ubstantially\\b.*")
+bo_su_num <- length(bo_su)
+
+bo_si <-
+ str_extract_all(doc_en$text, ".*\\b[Ss]ignificantly\\b.*")
+bo_si_num <- length(bo_si)
+
+bo_dr <-
+ str_extract_all(doc_en$text, ".*\\b[Dd]ramatically\\b.*")
+bo_dr_num <- length(bo_dr)
+
+bo_pr <-
+ str_extract_all(doc_en$text, ".*\\b[Pp]recisely\\b.*")
+bo_pr_num <- length(bo_pr)
+
+bo_me <-
+ str_extract_all(doc_en$text, ".*\\b[Mm]erely\\b.*")
+bo_me_num <- length(bo_me)
+
+bo_pa <-
+ str_extract_all(doc_en$text, ".*\\b[Pp]articularly\\b.*")
+bo_pa_num <- length(bo_pa)
+
+bo_in <-
+ str_extract_all(doc_en$text, ".*\\b[Ii]n\\s*particular\\b.*")
+bo_in_num <- length(bo_in)
+
+bo_ve <-
+ str_extract_all(doc_en$text, ".*\\b[Vv]ery\\b.*")
+bo_ve_num <- length(bo_ve)
+
+bo_wi <-
+ str_extract_all(doc_en$text, ".*\\b[Ww]ithout\\s*any\\b.*")
+bo_wi_num <- length(bo_wi)
+
+bo_de <-
+ str_extract_all(doc_en$text, ".*\\b[Dd]emonstrate.*\\b.*")
+bo_de_num <- length(bo_de)
+
+bo_ind <-
+ str_extract_all(doc_en$text, ".*\\b[Ii]ndicate.*\\b.*")
+bo_ind_num <- length(bo_ind)
+
+bo_ver <-
+ str_extract_all(doc_en$text, ".*\\b[Vv]erif.*\\b.*")
+bo_ver_num <- length(bo_ver)
+```
+
+```{r}
+#| label: match-attitude-markers-en
+#| message: false
+
+att_dif <-
+ str_extract_all(doc_en$text, ".*\\b[Dd]ifficult\\b.*")
+att_dif_num <- length(att_dif)
+
+att_sig <-
+ str_extract_all(doc_en$text, ".*\\b[Ss]ignificant\\b.*")
+att_sig_num <- length(att_sig)
+```
+
+```{r}
+#| label: match-engagement-markers-en
+#| message: false
+
+eng_gi <-
+ str_extract_all(doc_en$text, ".*\\b[Gg]iven\\b.*")
+eng_gi_num <- length(eng_gi)
+```
+
+```{r}
+#| label: match-self-mentions-en
+#| message: false
+
+sel_we <-
+ str_extract_all(doc_en$text, ".*\\b[Ww]e\\b.*")
+sel_we_num <- length(sel_we)
+
+sel_ou <-
+ str_extract_all(doc_en$text, ".*\\b[Oo]ur\\b.*")
+sel_ou_num <- length(sel_ou)
+```
+
+```{r}
+#| label: match-transitions-en
+#| message: false
+
+tr_ho <-
+ str_extract_all(doc_en$text, ".*\\b[Hh]owever\\b.*")
+tr_ho_num <- length(tr_ho)
+
+tr_wh <-
+ str_extract_all(doc_en$text, ".*\\b[Ww]hile\\b.*")
+tr_wh_num <- length(tr_wh)
+
+tr_bu <-
+ str_extract_all(doc_en$text, ".*\\b[Bb]ut\\b.*")
+tr_bu_num <- length(tr_bu)
+
+tr_thu <-
+ str_extract_all(doc_en$text, ".*\\b[Tt]hus\\b.*")
+tr_thu_num <- length(tr_thu)
+
+tr_in <-
+ str_extract_all(doc_en$text, ".*\\b[Ii]n\\s*contrast(?:\\sto)?\\b.*")
+tr_in_num <- length(tr_in)
+
+tr_ad <-
+ str_extract_all(doc_en$text, ".*\\b[Aa]dditionally\\b.*")
+tr_ad_num <- length(tr_ad)
+
+tr_mo <-
+ str_extract_all(doc_en$text, ".*\\b[Mm]oreover\\b.*")
+tr_mo_num <- length(tr_mo)
+
+tr_al <-
+ str_extract_all(doc_en$text, ".*\\b[Aa]lso\\b.*")
+tr_al_num <- length(tr_al)
+
+tr_st <-
+ str_extract_all(doc_en$text, ".*\\b[Ss]till\\b.*")
+tr_st_num <- length(tr_st)
+
+tr_the <-
+ str_extract_all(doc_en$text, ".*\\b[Tt]herefore\\b.*")
+tr_the_num <- length(tr_the)
+
+tr_as <-
+ str_extract_all(doc_en$text, ".*\\b[Aa]s\\s*such\\b.*")
+tr_as_num <- length(tr_as)
+
+tr_an <-
+ str_extract_all(doc_en$text, ".*\\b[Aa]nd\\b.*")
+tr_an_num <- length(tr_an)
+```
+
+```{r}
+#| label: match-frame-markers-en
+#| message: false
+
+fr_fi <-
+ str_extract_all(doc_en$text, ".*\\b[Ff]irst.*\\b.*")
+fr_fi_num <- length(fr_fi)
+
+fr_th <-
+ str_extract_all(doc_en$text, ".*\\b[Tt]hen\\b.*")
+fr_th_num <- length(fr_th)
+
+fr_fu <-
+ str_extract_all(doc_en$text, ".*\\b[Ff]urther\\b.*")
+fr_fu_num <- length(fr_fu)
+
+fr_re <-
+ str_extract_all(doc_en$text, ".*\\b[Rr]ecently\\b.*")
+fr_re_num <- length(fr_re)
+
+fr_he <-
+ str_extract_all(doc_en$text, ".*\\b[Hh]ere\\b.*")
+fr_he_num <- length(fr_he)
+
+fr_ta <-
+ str_extract_all(doc_en$text, ".*\\b[Tt]aken\\s*together\\b.*")
+fr_ta_num <- length(fr_ta)
+```
+
+```{r}
+#| label: match-endophoric markers-en
+#| message: false
+
+end_fi <-
+ str_extract_all(doc_en$text, ".*\\b[Ff]ig\\b.*")
+end_fi_num <- length(end_fi)
+
+end_vi <-
+ str_extract_all(doc_en$text, ".*\\b[Vv]ideo\\b.*")
+end_vi_num <- length(end_vi)
+
+end_me <-
+ str_extract_all(doc_en$text, ".*\\bMethods\\b.*")
+end_me_num <- length(end_me)
+
+end_as <-
+ str_extract_all(doc_en$text, ".*\\b[Aa]s\\s*describe.*\\b.*")
+end_as_num <- length(end_as)
+```
+
+```{r}
+#| label: match-code-glosses-en
+#| message: false
+
+co_fo <-
+ str_extract_all(doc_en$text, ".*\\b[Ff]or\\s*instance\\b.*")
+co_fo_num <- length(co_fo)
+
+co_in <-
+ str_extract_all(doc_en$text, ".*\\b[Ii]ncluding\\b.*")
+co_in_num <- length(co_in)
+```
+
+```{r}
+#| label: match-hedges-cn
+#| message: false
+
+he_yi <-
+ str_extract_all(doc_cn$text, ".*一定程度.*")
+he_yi_num <- length(he_yi)
+
+he_ke <-
+ str_extract_all(doc_cn$text, ".*\\可能.*")
+he_ke_num <- length(he_ke)
+
+he_ji <-
+ str_extract_all(doc_cn$text, ".*几乎.*")
+he_ji_num <- length(he_ji)
+
+he_ky <-
+ str_extract_all(doc_cn$text, ".*可以说是.*")
+he_ky_num <- length(he_ky)
+
+he_l <-
+ str_extract_all(doc_cn$text, ".*略有.*")
+he_l_num <- length(he_l)
+```
+
+```{r}
+#| label: match-boosters-cn
+#| message: false
+
+bo_bh <-
+ str_extract_all(doc_cn$text, ".*不会.*")
+bo_bh_num <- length(bo_bh)
+
+bo_wf <-
+ str_extract_all(doc_cn$text, ".*\\无法.*")
+bo_wf_num <- length(bo_wf)
+
+bo_bz <-
+ str_extract_all(doc_cn$text, ".*不再.*")
+bo_bz_num <- length(bo_bz)
+
+bo_wx <-
+ str_extract_all(doc_cn$text, ".*无需.*")
+bo_wx_num <- length(bo_wx)
+
+bo_bd <-
+ str_extract_all(doc_cn$text, ".*不对.*")
+bo_bd_num <- length(bo_bd)
+
+bo_jb <-
+ str_extract_all(doc_cn$text, ".*均不.*")
+bo_jb_num <- length(bo_jb)
+
+bo_gs <-
+ str_extract_all(doc_cn$text, ".*\\更是.*")
+bo_gs_num <- length(bo_gs)
+
+bo_bx <-
+ str_extract_all(doc_cn$text, ".*必需.*")
+bo_bx_num <- length(bo_bx)
+
+bo_jn <-
+ str_extract_all(doc_cn$text, ".*就能.*")
+bo_jn_num <- length(bo_jn)
+
+bo_rh <-
+ str_extract_all(doc_cn$text, ".*任何.*")
+bo_rh_num <- length(bo_rh)
+
+bo_dd <-
+ str_extract_all(doc_cn$text, ".*大大.*")
+bo_dd_num <- length(bo_dd)
+
+bo_yq <-
+ str_extract_all(doc_cn$text, ".*\\尤其.*")
+bo_yq_num <- length(bo_yq)
+
+bo_zy <-
+ str_extract_all(doc_cn$text, ".*只有.*")
+bo_zy_num <- length(bo_zy)
+
+bo_j <-
+ str_extract_all(doc_cn$text, ".*仅.*")
+bo_j_num <- length(bo_j)
+
+bo_z <-
+ str_extract_all(doc_cn$text, ".*最.*")
+bo_z_num <- length(bo_z)
+
+bo_ji <-
+ str_extract_all(doc_cn$text, ".*极.*")
+bo_ji_num <- length(bo_ji)
+
+bo_mx <-
+ str_extract_all(doc_cn$text, ".*\\明显.*")
+bo_mx_num <- length(bo_mx)
+
+bo_xz <-
+ str_extract_all(doc_cn$text, ".*显著.*")
+bo_xz_num <- length(bo_xz)
+
+bo_zs <-
+ str_extract_all(doc_cn$text, ".*证实.*")
+bo_zs_num <- length(bo_zs)
+
+bo_js <-
+ str_extract_all(doc_cn$text, ".*揭示.*")
+bo_js_num <- length(bo_js)
+
+bo_zm <-
+ str_extract_all(doc_cn$text, ".*证明.*")
+bo_zm_num <- length(bo_zm)
+
+bo_yz <-
+ str_extract_all(doc_cn$text, ".*\\验证.*")
+bo_yz_num <- length(bo_yz)
+
+bo_bcz <-
+ str_extract_all(doc_cn$text, ".*不存在.*")
+bo_bcz_num <- length(bo_bcz)
+```
+
+```{r}
+#| label: match-attitude -markers-cn
+#| message: false
+
+att_yw <-
+ str_extract_all(doc_cn$text, ".*有望.*")
+att_yw_num <- length(att_yw)
+
+att_n <-
+ str_extract_all(doc_cn$text, ".*\\难.*")
+att_n_num <- length(att_n)
+```
+
+```{r}
+#| label: match-engagement -markers-cn
+#| message: false
+
+eng_sm <-
+ str_extract_all(doc_cn$text, ".*说明.*")
+eng_sm_num <- length(eng_sm)
+```
+
+```{r}
+#| label: match-self-mentions-cn
+#| message: false
+
+sel_wm <-
+ str_extract_all(doc_cn$text, ".*我们.*")
+sel_wm_num <- length(sel_wm)
+```
+
+```{r}
+#| label: match-transitions-cn
+#| message: false
+
+tr_d <-
+ str_extract_all(doc_cn$text, ".*\\但.*")
+tr_d_num <- length(tr_d)
+
+tr_re <-
+ str_extract_all(doc_cn$text, ".*然而.*")
+tr_re_num <- length(tr_re)
+
+tr_e <-
+ str_extract_all(doc_cn$text, ".*而.*")
+tr_e_num <- length(tr_e)
+
+tr_sr <-
+ str_extract_all(doc_cn$text, ".*虽然.*")
+tr_sr_num <- length(tr_sr)
+
+tr_ds <-
+ str_extract_all(doc_cn$text, ".*\\但是.*")
+tr_ds_num <- length(tr_ds)
+
+tr_q <-
+ str_extract_all(doc_cn$text, ".*且.*")
+tr_q_num <- length(tr_q)
+
+tr_ce <-
+ str_extract_all(doc_cn$text, ".*从而.*")
+tr_ce_num <- length(tr_ce)
+
+tr_rc <-
+ str_extract_all(doc_cn$text, ".*如此.*")
+tr_rc_num <- length(tr_rc)
+
+tr_yy <-
+ str_extract_all(doc_cn$text, ".*\\由于.*")
+tr_yy_num <- length(tr_yy)
+
+tr_zy <-
+ str_extract_all(doc_cn$text, ".*这样一来.*")
+tr_zy_num <- length(tr_zy)
+
+tr_yw <-
+ str_extract_all(doc_cn$text, ".*因为.*")
+tr_yw_num <- length(tr_yw)
+
+tr_sy <-
+ str_extract_all(doc_cn$text, ".*所以.*")
+tr_sy_num <- length(tr_sy)
+
+tr_yc <-
+ str_extract_all(doc_cn$text, ".*\\因此.*")
+tr_yc_num <- length(tr_yc)
+
+tr_sh <-
+ str_extract_all(doc_cn$text, ".*随后.*")
+tr_sh_num <- length(tr_sh)
+
+tr_rg <-
+ str_extract_all(doc_cn$text, ".*如果.*")
+tr_rg_num <- length(tr_rg)
+
+tr_r <-
+ str_extract_all(doc_cn$text, ".*若.*")
+tr_r_num <- length(tr_r)
+
+tr_h <-
+ str_extract_all(doc_cn$text, ".*\\或.*")
+tr_h_num <- length(tr_h)
+
+tr_ts <-
+ str_extract_all(doc_cn$text, ".*同时.*")
+tr_ts_num <- length(tr_ts)
+
+tr_yj <-
+ str_extract_all(doc_cn$text, ".*以及.*")
+tr_yj_num <- length(tr_yj)
+
+tr_ren <-
+ str_extract_all(doc_cn$text, ".*仍.*")
+tr_ren_num <- length(tr_ren)
+
+tr_he <-
+ str_extract_all(doc_cn$text, ".*\\和.*")
+tr_he_num <- length(tr_he)
+
+tr_y <-
+ str_extract_all(doc_cn$text, ".*也.*")
+tr_y_num <- length(tr_y)
+
+tr_xb <-
+ str_extract_all(doc_cn$text, ".*相比.*")
+tr_xb_num <- length(tr_xb)
+
+tr_bin <-
+ str_extract_all(doc_cn$text, ".*并.*")
+tr_bin_num <- length(tr_bin)
+```
+
+```{r}
+#| label: match-frame-markers-cn
+#| message: false
+
+fr_sx <-
+ str_extract_all(doc_cn$text, ".*首先.*")
+fr_sx_num <- length(fr_sx)
+
+fr_xs <-
+ str_extract_all(doc_cn$text, ".*\\先是.*")
+fr_xs_num <- length(fr_xs)
+
+fr_dc <-
+ str_extract_all(doc_cn$text, ".*\\第.次.*")
+fr_dc_num <- length(fr_dc)
+
+fr_zs <-
+ str_extract_all(doc_cn$text, ".*这是.*")
+fr_zs_num <- length(fr_zs)
+
+fr_db <-
+ str_extract_all(doc_cn$text, ".*第.部分.*")
+fr_db_num <- length(fr_db)
+
+fr_jb <-
+ str_extract_all(doc_cn$text, ".*进一步.*")
+fr_jb_num <- length(fr_jb)
+```
+
+```{r}
+#| label: match-endophoric -markers-cn
+#| message: false
+
+end_jt <-
+ str_extract_all(doc_cn$text, ".*见图.*")
+end_jt_num <- length(end_jt)
+
+end_ru <-
+ str_extract_all(doc_cn$text, ".*\\如图.*")
+end_ru_num <- length(end_ru)
+
+end_bc <-
+ str_extract_all(doc_cn$text, ".*补充数据图.*")
+end_bc_num <- length(end_bc)
+
+end_flt <-
+ str_extract_all(doc_cn$text, ".*\\附录图.*")
+end_flt_num <- length(end_flt)
+
+end_js <-
+ str_extract_all(doc_cn$text, ".*技术原理部分.*")
+end_js_num <- length(end_js)
+
+end_fa <-
+ str_extract_all(doc_cn$text, ".*\\方案.*")
+end_fa_num <- length(end_fa)
+
+end_sp <-
+ str_extract_all(doc_cn$text, ".*附录视频.*")
+end_sp_num <- length(end_sp)
+
+end_ss <-
+ str_extract_all(doc_cn$text, ".*\\上述.*")
+end_ss_num <- length(end_ss)
+
+end_xq <-
+ str_extract_all(doc_cn$text, ".*先前.*")
+end_xq_num <- length(end_xq)
+```
+
+```{r}
+#| label: match-code-glosses-cn
+#| message: false
+
+co_j <-
+ str_extract_all(doc_cn$text, ".*即.*")
+co_j_num <- length(co_j)
+
+co_g <-
+ str_extract_all(doc_cn$text, ".*\\该.*")
+co_g_num <- length(co_g)
+
+co_qz <-
+ str_extract_all(doc_cn$text, ".*其中.*")
+co_qz_num <- length(co_qz)
+
+co_bk <-
+ str_extract_all(doc_cn$text, ".*\\包括.*")
+co_bk_num <- length(co_bk)
+```

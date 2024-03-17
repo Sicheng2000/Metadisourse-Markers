@@ -1,0 +1,20 @@
+Title: Metadisourse Markers
+Author: Sicheng Wang
+Date: 2024-03-16
+Description: It counted the numbers of each metadiscourse markers categorized by Sicheng Wang according to Hyland and Tse(2004). The selected source text is `Control of the activity of CAR-T cells within tumours via focused ultrasound` following with its translation translated by Sicheng Wang
+
+
+Environment:
+  - Operating System: Windows 11
+  - R Version: R version 4.3.2 (2023-10-31)
+  - RStudio Version: 2023.12.0.369
+
+Dependencies:
+  - knitr: 1.45
+  - stringr: 1.5.1
+  - readr: 2.1.5
+  - readtext: 0.91
+  - fs: 1.6.3
+
+References:
+Hyland, K., & Tse, P. (2004). Metadiscourse in academic writing: A reappraisal. Applied linguistics, 25(2), 156-177.

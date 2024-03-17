@@ -1,0 +1,7 @@
+# RStudio files
+*.Rproj
+
+# Data
+data/original/*
+
+.Rproj.user
